@@ -79,6 +79,61 @@ export type PageDocument<Lang extends string = string> =
 export type AllDocumentTypes = PageDocument;
 
 /**
+ * Primary content in *Hero → Default → Primary*
+ */
+export interface HeroSliceDefaultPrimary {
+  /**
+   * Heading field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading: prismic.TitleField;
+
+  /**
+   * Subheading field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.subheading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  subheading: prismic.RichTextField;
+
+  /**
+   * Body field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.body
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  body: prismic.RichTextField;
+
+  /**
+   * Button Text field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.button_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  button_text: prismic.KeyTextField;
+
+  /**
+   * Button Link field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.button_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  button_link: prismic.LinkField;
+}
+
+/**
  * Default variation for Hero Slice
  *
  * - **API ID**: `default`
@@ -87,7 +142,7 @@ export type AllDocumentTypes = PageDocument;
  */
 export type HeroSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<HeroSliceDefaultPrimary>,
   never
 >;
 
@@ -131,6 +186,7 @@ declare module "@prismicio/client" {
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
       HeroSlice,
+      HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
     };

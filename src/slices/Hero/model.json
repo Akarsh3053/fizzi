@@ -11,7 +11,52 @@
       "version": "initial",
       "description": "Default",
       "imageUrl": "",
-      "primary": {},
+      "primary": {
+        "heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "heading1"
+          }
+        },
+        "subheading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Subheading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph"
+          }
+        },
+        "body": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Body",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph"
+          }
+        },
+        "button_text": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": ""
+          }
+        },
+        "button_link": {
+          "type": "Link",
+          "config": {
+            "label": "Button Link",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "select": null,
+            "allowText": true
+          }
+        }
+      },
       "items": {}
     }
   ]
