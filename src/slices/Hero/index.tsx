@@ -4,12 +4,13 @@ import { Bounded } from "@/components/Bounded";
 import Button from "@/components/Button";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { asText, Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-import { TextSplitter } from "./TextSplitter";
+import { TextSplitter } from "@/components/TextSplitter";
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 /**
  * Props for `Hero`.
@@ -52,6 +53,19 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
         y: 10,
         duration: 0.6,
       });
+
+
+    const scrollTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5,
+        markers: true,
+      }
+    });
+
+
   })
 
 
