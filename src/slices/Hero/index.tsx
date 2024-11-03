@@ -65,7 +65,28 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       }
     });
 
-
+    scrollTl
+      .fromTo("body", {
+        backgroundColor: "#FDE047"
+      }, {
+        backgroundColor: "#D9F990",
+        overwrite: "auto"
+      },
+        1
+      )
+      .from(".text-side-heading .split-char", {
+        scale: 1.3,
+        y: 40,
+        rotate: -25,
+        opacity: 0,
+        stagger: .1,
+        ease: "back.out(3)",
+        duration: .5
+      })
+      .from(".text-side-body", {
+        y: 20,
+        opacity: 0
+      });
   })
 
 
