@@ -1,5 +1,6 @@
 "use client"
 
+import { Environment } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 
 type Props = {}
@@ -23,12 +24,11 @@ export default function ViewCanvas({ }: Props) {
                 fov: 30,
             }}
         >
-            <mesh rotation={[.5, .5, 0]} position={[1, 0, 0]}>
-                <boxGeometry />
-                <meshStandardMaterial color={"hotpink"} />
-            </mesh>
-            <ambientLight intensity={2} />
-            <spotLight position={[1, 1, 1]} intensity={3} />
+
+            <Environment
+                files="/hdr/lobby.hdr"
+                environmentIntensity={1.5}
+            />
         </Canvas>
     )
 }
