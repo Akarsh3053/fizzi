@@ -1,6 +1,6 @@
 "use client"
 
-import { Environment } from "@react-three/drei"
+import { View } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 
 type Props = {}
@@ -24,11 +24,7 @@ export default function ViewCanvas({ }: Props) {
                 fov: 30,
             }}
         >
-
-            <Environment
-                files="/hdr/lobby.hdr"
-                environmentIntensity={1.5}
-            />
+            <View.Port />
         </Canvas>
     )
 }
