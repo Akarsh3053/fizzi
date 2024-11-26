@@ -1,17 +1,18 @@
 'use client'
 
-import { Bounded } from "@/components/Bounded";
-import Button from "@/components/Button";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { asText, Content } from "@prismicio/client";
-import { PrismicNextImage } from "@prismicio/next";
-import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
-import { TextSplitter } from "@/components/TextSplitter";
-import { View } from "@react-three/drei";
 import Scene from "./Scene";
 import { Bubbles } from "./Bubbles";
+import { useGSAP } from "@gsap/react";
+import Button from "@/components/Button";
+import { View } from "@react-three/drei";
+import { useStore } from "@/hooks/useStore";
+import { Bounded } from "@/components/Bounded";
+import { PrismicNextImage } from "@prismicio/next";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { asText, Content } from "@prismicio/client";
+import { TextSplitter } from "@/components/TextSplitter";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -27,7 +28,11 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
 const Hero = ({ slice }: HeroProps): JSX.Element => {
 
+  const ready = useStore((state) => state.ready);
+
   useGSAP(() => {
+    if (!ready) return;
+
     const introTl = gsap.timeline()
 
     introTl
@@ -90,7 +95,7 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
         y: 20,
         opacity: 0
       });
-  })
+  }, { dependencies: [ready] })
 
 
   return (
