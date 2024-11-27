@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { asText, Content } from "@prismicio/client";
 import { TextSplitter } from "@/components/TextSplitter";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -29,6 +30,7 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 const Hero = ({ slice }: HeroProps): JSX.Element => {
 
   const ready = useStore((state) => state.ready);
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   useGSAP(() => {
     if (!ready) return;
