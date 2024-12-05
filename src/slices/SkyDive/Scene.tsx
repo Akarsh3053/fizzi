@@ -1,13 +1,18 @@
 "use client";
 
 import FloatingCan from "@/components/FloatingCan";
-import { Environment } from "@react-three/drei";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { Content } from "@prismicio/client";
+import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 
-type Props = {}
+type SkyDiveProps = {
+    sentence: string | null;
+    flavor: Content.SkyDiveSliceDefaultPrimary["flavour"];
+}
 
-export default function Scene({ }: Props) {
+export default function Scene({ sentence, flavor }: SkyDiveProps) {
     const groupRef = useRef<THREE.Group>(null);
     const canRef = useRef<THREE.Group>(null);
     const cloud1Ref = useRef<THREE.Group>(null);
@@ -18,9 +23,45 @@ export default function Scene({ }: Props) {
 
     return (
         <group ref={groupRef}>
-            <FloatingCan ref={canRef}></FloatingCan>
+            <group rotation={[0, 0, 0.5]}>
+                <FloatingCan flavor={flavor} ref={canRef}></FloatingCan>
+            </group>
+
+            <Clouds ref={cloudsRef}>
+                <Cloud ref={cloud1Ref} bounds={[10, 10, 2]} />
+                <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
+            </Clouds>
+
+            <group ref={wordsRef}>
+                {sentence && <ThreeText sentence={sentence} color="#F97315" />}
+            </group>
+
+
             <ambientLight intensity={2} color="#9DDEFA" />
             <Environment files="hdr/field.hdr" environmentIntensity={1.5} />
         </group>
     )
+}
+
+function ThreeText({ sentence, color = "white", }: { sentence: string; color?: string; }) {
+    const words = sentence.toUpperCase().split(" ");
+
+    const material = new THREE.MeshLambertMaterial();
+    const isDesktop = useMediaQuery("(min-width: 950px)", true);
+
+    return words.map((word: string, wordIndex: number) => (
+        <Text
+            key={`${wordIndex}-${word}`}
+            scale={isDesktop ? 1 : 0.5}
+            color={color}
+            material={material}
+            font="/fonts/Alpino-Variable.woff"
+            fontWeight={900}
+            anchorX={"center"}
+            anchorY={"middle"}
+            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!,.?'"
+        >
+            {word}
+        </Text>
+    ));
 }
