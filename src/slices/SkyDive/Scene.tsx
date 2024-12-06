@@ -1,21 +1,22 @@
 "use client";
 
-import gsap from "gsap";
+import { Content } from "@prismicio/client";
+import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Content } from "@prismicio/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import FloatingCan from "@/components/FloatingCan";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type SkyDiveProps = {
     sentence: string | null;
     flavor: Content.SkyDiveSliceDefaultPrimary["flavour"];
-}
+};
 
 export default function Scene({ sentence, flavor }: SkyDiveProps) {
     const groupRef = useRef<THREE.Group>(null);
@@ -131,30 +132,46 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
             .to(cloudsRef.current.position, { z: 7, duration: 0.5 });
     });
 
-
     return (
         <group ref={groupRef}>
+            {/* Can */}
             <group rotation={[0, 0, 0.5]}>
-                <FloatingCan flavor={flavor} ref={canRef}></FloatingCan>
+                <FloatingCan
+                    ref={canRef}
+                    flavor={flavor}
+                    rotationIntensity={0}
+                    floatIntensity={3}
+                    floatSpeed={3}
+                >
+                    <pointLight intensity={30} color="#8C0413" decay={0.6} />
+                </FloatingCan>
             </group>
 
+            {/* Clouds */}
             <Clouds ref={cloudsRef}>
                 <Cloud ref={cloud1Ref} bounds={[10, 10, 2]} />
                 <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
             </Clouds>
 
+            {/* Text */}
             <group ref={wordsRef}>
                 {sentence && <ThreeText sentence={sentence} color="#F97315" />}
             </group>
 
-
+            {/* Lights */}
             <ambientLight intensity={2} color="#9DDEFA" />
-            <Environment files="hdr/field.hdr" environmentIntensity={1.5} />
+            <Environment files="/hdr/field.hdr" environmentIntensity={1.5} />
         </group>
-    )
+    );
 }
 
-function ThreeText({ sentence, color = "white", }: { sentence: string; color?: string; }) {
+function ThreeText({
+    sentence,
+    color = "white",
+}: {
+    sentence: string;
+    color?: string;
+}) {
     const words = sentence.toUpperCase().split(" ");
 
     const material = new THREE.MeshLambertMaterial();
